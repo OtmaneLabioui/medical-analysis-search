@@ -4,17 +4,22 @@
 
 // Signification des secteurs
 window.SECTOR_NAMES = {
-    "DTP": "Dosage Thérapeutique Pharmacologique",
+    "DTP": "Département Toxicopharamacologie",
     "LB": "Laboratoire de Biochimie",
-    "LBM": "Laboratoire de Bactériologie et Microbiologie",
+    "LBM": "Laboratoire de Bactériologie Médicale",
+    "LBMM": "Laboratoire de Biologie Moléculaire Médicale",
     "LH": "Laboratoire d'Hématologie",
     "LH/LP": "Laboratoire Hématologie/Parasitologie",
     "LIC": "Laboratoire d'Immunochimie",
     "LIS": "Laboratoire d'Immunosérologie",
     "LIS/LH": "Laboratoire Immunosérologie/Hématologie",
-    "LP": "Laboratoire de Parasitologie",
-    "LSM": "Laboratoire Spécialisé Métabolisme",
-    "Labo. Spécialisé": "Laboratoire Spécialisé"
+    "LP": "Laboratoire des Protéines",
+    "LPM": "Laboratoire de Parasitologie Médicale",
+    "LSM": "Laboratoire de Spectrométrie de Masse",
+    "LELU": "Laboratoire d'Exploration Lithiase Urinaire",
+    "DBS": "Département de Bio Sécurité L3",
+    "LC": "Laboratoire de Chromatographie",
+    "Labo. Spécialisé": "Laboratoire Sous Traitant"
 };
 
 window.MEDICAL_DATABASE = [
@@ -427,9 +432,21 @@ window.MEDICAL_DATABASE = [
     {code:"AOU",name:"ACIDES ORGANIQUES",sector:"Labo. Spécialisé",delay:"A TELEPHONER",price:1800.00,description:"Examen de laboratoire médical pour diagnostic et suivi thérapeutique."},
     {code:"HLAB",name:"HLAB27 ANTIGENE",sector:"Labo. Spécialisé",delay:"A TELEPHONER",price:450.00,description:"Immunoglobulines E. Diagnostic des allergies et maladies parasitaires."},
     {code:"HLABG",name:"HLAB27 GENOTYPAGE",sector:"Labo. Spécialisé",delay:"A TELEPHONER",price:900.00,description:"Examen de laboratoire médical pour diagnostic et suivi thérapeutique."},
-    {code:"BHELY BILAN D’HEMOLY",name:"LH/LP",sector:"7",delay:"390.00",price:30.00,description:"Dosage hormonal. Évalue le fonctionnement du système endocrinien et la fertilité."},
-    {code:"BILPH3 BILAN DES ANT",name:"LIS/LH",sector:"4",delay:"1005.00",price:147.00,description:"Dosage hormonal. Évalue le fonctionnement du système endocrinien et la fertilité."},
-    {code:"CATE CATECHOLAMINES ",name:"Labo. Spécialisé",sector:"A TELEPHONER",delay:"700.00",price:70.00,description:"Examen de laboratoire médical pour diagnostic et suivi thérapeutique."}
+    {code:"BLIP",name:"BILAN LIPIDIQUE",sector:"LB",delay:"1 jour",price:190.00,description:"Bilan complet des graisses sanguines: cholestérol total, HDL, LDL et triglycérides. Évaluation du risque cardiovasculaire."},
+    {code:"BHELY",name:"BILAN D'HEMOLYSE",sector:"LH/LP",delay:"7 jours",price:390.00,description:"Bilan complet pour diagnostic de la destruction anormale des globules rouges. Recherche de cause d'anémie hémolytique."},
+    {code:"BTHYR",name:"BILAN THYROIDIEN",sector:"LIC",delay:"1 jour",price:400.00,description:"Bilan complet de la thyroïde: TSH, T3, T4. Diagnostic des dysfonctions thyroïdiennes (hypo/hyperthyroïdie)."},
+    {code:"BHEMO",name:"BILAN D'HEMOSTASE",sector:"LH",delay:"1 jour",price:120.00,description:"Évaluation de la coagulation sanguine: TP, TCA, fibrinogène. Dépistage des troubles hémorragiques."},
+    {code:"BHEPA",name:"BILAN HEPATIQUE",sector:"LB",delay:"1 jour",price:340.00,description:"Bilan complet du foie: transaminases (ALAT, ASAT), bilirubine, PAL, GGT. Diagnostic des maladies hépatiques."},
+    {code:"ENZCAR",name:"ENZYMES CARDIAQUES",sector:"LB",delay:"1 jour",price:350.00,description:"Marqueurs cardiaques: troponine, CPK-MB, myoglobine. Diagnostic urgent de l'infarctus du myocarde."},
+    {code:"SHBV",name:"SEROLOGIE HBV",sector:"LIS",delay:"1 jour",price:620.00,description:"Sérologie complète de l'hépatite B: AgHBs, AcHBs, AcHBc. Dépistage et suivi de l'infection virale B."},
+    {code:"BILPH3",name:"BILAN DES ANTIPHOSPHOLIPIDES",sector:"LIS/LH",delay:"4 jours",price:1005.00,description:"Recherche d'anticorps antiphospholipides. Diagnostic du syndrome des antiphospholipides et thromboses."},
+    {code:"BKCU",name:"RECHERCHE ET CULTURE DE BK CU+OS",sector:"LBM",delay:"1 jour",price:62.00,description:"Recherche de bacille de Koch dans les crachats et os. Diagnostic de la tuberculose pulmonaire et osseuse."},
+    {code:"BKDI",name:"RECHERCHE ET CULTURE DE BK DIVERS",sector:"LBM",delay:"1 jour",price:62.00,description:"Recherche de bacille de Koch dans divers prélèvements. Diagnostic de la tuberculose extra-pulmonaire."},
+    {code:"BKSG",name:"RECHERCHE ET CULTURE DE BK SANG",sector:"LBM",delay:"1 jour",price:62.00,description:"Recherche de bacille de Koch dans le sang. Diagnostic de la tuberculose disséminée."},
+    {code:"BKUR",name:"RECHERCHE DE BK DANS URINES",sector:"LBM",delay:"1 jour",price:132.00,description:"Recherche de bacille de Koch dans les urines. Diagnostic de la tuberculose urinaire et rénale."},
+    {code:"ECBU3",name:"EXAMEN CYTOBACT DES URINES",sector:"LBM",delay:"3 jours",price:150.00,description:"Analyse complète des urines avec culture bactérienne. Diagnostic des infections urinaires (cystite, pyélonéphrite)."},
+    {code:"EXP1",name:"CYTOBACTERIOLOGIE EXPECTORATION",sector:"LBM",delay:"3 jours",price:150.00,description:"Analyse bactériologique des crachats. Identification du germe responsable d'infection respiratoire."},
+    {code:"CATE",name:"CATECHOLAMINES URINAIRES",sector:"Labo. Spécialisé",delay:"A TELEPHONER",price:700.00,description:"Dosage des hormones du stress dans les urines. Diagnostic des tumeurs des glandes surrénales (phéochromocytome)."}
 ];
 
 console.log(`✅ ${window.MEDICAL_DATABASE.length} analyses médicales chargées`);
