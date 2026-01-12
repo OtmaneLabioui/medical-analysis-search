@@ -5,6 +5,7 @@ let currentResults = [];
 // DOM Elements (initialized after DOM loads)
 let searchInput, searchBtn, clearBtn, resultsContainer, showAllBtn;
 let loadingOverlay, suggestionsDropdown, totalAnalysesSpan, toastContainer;
+let chatbot, chatbotToggle, chatMessages, chatInput, sendChatBtn, closeChatBtn;
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,6 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     totalAnalysesSpan = document.getElementById('totalAnalyses');
     toastContainer = document.getElementById('toastContainer');
     
+    // Chatbot elements
+    chatbot = document.getElementById('chatbot');
+    chatbotToggle = document.getElementById('chatbotToggle');
+    chatMessages = document.getElementById('chatMessages');
+    chatInput = document.getElementById('chatInput');
+    sendChatBtn = document.getElementById('sendChatBtn');
+    closeChatBtn = document.getElementById('closeChatBtn');
+    
     // Event Listeners
     if (searchBtn) searchBtn.addEventListener('click', performSearch);
     if (clearBtn) clearBtn.addEventListener('click', clearSearch);
@@ -27,6 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('keydown', handleKeyNavigation);
     }
     if (showAllBtn) showAllBtn.addEventListener('click', showAllData);
+    
+    // Chatbot event listeners
+    if (chatbotToggle) chatbotToggle.addEventListener('click', toggleChatbot);
+    if (closeChatBtn) closeChatBtn.addEventListener('click', toggleChatbot);
+    if (sendChatBtn) sendChatBtn.addEventListener('click', sendChatMessage);
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendChatMessage();
+        });
+    }
     
     // Hide suggestions when clicking outside
     document.addEventListener('click', (e) => {
@@ -438,4 +457,181 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text || '';
     return div.innerHTML;
+}
+// ===================================
+// CHATBOT FUNCTIONALITY
+// ===================================
+
+function toggleChatbot() {
+    if (chatbot) {
+        chatbot.classList.toggle('active');
+        if (chatbot.classList.contains('active')) {
+            chatInput.focus();
+            // Hide badge when opening
+            const badge = document.querySelector('.chat-badge');
+            if (badge) badge.style.display = 'none';
+        }
+    }
+}
+
+function sendChatMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+    
+    // Add user message
+    addChatMessage(message, 'user');
+    chatInput.value = '';
+    
+    // Show typing indicator
+    showTypingIndicator();
+    
+    // Process message and respond
+    setTimeout(() => {
+        hideTypingIndicator();
+        const response = processChatMessage(message);
+        addChatMessage(response, 'bot');
+    }, 800);
+}
+
+function addChatMessage(content, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `${type}-message`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.innerHTML = type === 'bot' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    
+    if (type === 'bot' && typeof content === 'object') {
+        contentDiv.innerHTML = content.html;
+    } else {
+        const p = document.createElement('p');
+        p.textContent = content;
+        contentDiv.appendChild(p);
+    }
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(contentDiv);
+    chatMessages.appendChild(messageDiv);
+    
+    // Scroll to bottom
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTypingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'bot-message typing-indicator-container';
+    indicator.id = 'typingIndicator';
+    indicator.innerHTML = `
+        <div class="message-avatar">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+            <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+    chatMessages.appendChild(indicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) indicator.remove();
+}
+
+function processChatMessage(message) {
+    const lowerMessage = message.toLowerCase();
+    
+    // Extract keywords for search
+    const keywords = ['prix', 'price', 'coût', 'cout', 'combien', 'tarif', 'recherche', 'chercher', 'trouver'];
+    const isPriceQuery = keywords.some(kw => lowerMessage.includes(kw));
+    
+    // Search for analysis
+    const results = searchInDatabase(message);
+    
+    if (results.length === 0) {
+        return {
+            html: `
+                <p>😕 Désolé, je n'ai pas trouvé d'analyse correspondant à "${escapeHtml(message)}".</p>
+                <p>Essayez avec:</p>
+                <ul>
+                    <li>Le code de l'analyse (ex: NFS, TSH)</li>
+                    <li>Le nom complet (ex: Glycémie, Cholestérol)</li>
+                    <li>Un mot-clé (ex: thyroïde, foie)</li>
+                </ul>
+            `
+        };
+    }
+    
+    if (results.length === 1) {
+        const item = results[0];
+        const sectorName = window.SECTOR_NAMES && window.SECTOR_NAMES[item.sector] 
+            ? window.SECTOR_NAMES[item.sector] 
+            : item.sector;
+        
+        return {
+            html: `
+                <p>✅ J'ai trouvé cette analyse:</p>
+                <div class="analysis-result">
+                    <strong>${escapeHtml(item.name)}</strong>
+                    <p><strong>Code:</strong> ${escapeHtml(item.code)}</p>
+                    <p><strong>Prix:</strong> <span class="price">${item.price.toFixed(2)} DH</span></p>
+                    <p><strong>Secteur:</strong> ${escapeHtml(sectorName)}</p>
+                    <p><strong>Délai:</strong> ${escapeHtml(item.delay)}</p>
+                    <p><strong>Description:</strong> ${escapeHtml(item.description)}</p>
+                </div>
+            `
+        };
+    }
+    
+    // Multiple results
+    const limitedResults = results.slice(0, 5);
+    let html = `<p>📋 J'ai trouvé ${results.length} analyse(s)${results.length > 5 ? ` (affichage des 5 premières)` : ''}:</p>`;
+    
+    limitedResults.forEach(item => {
+        html += `
+            <div class="analysis-result">
+                <strong>${escapeHtml(item.name)}</strong>
+                <p><strong>Code:</strong> ${escapeHtml(item.code)} | <strong>Prix:</strong> <span class="price">${item.price.toFixed(2)} DH</span></p>
+            </div>
+        `;
+    });
+    
+    if (results.length > 5) {
+        html += `<p><small>💡 Affinez votre recherche pour voir plus de détails.</small></p>`;
+    }
+    
+    return { html };
+}
+
+function searchInDatabase(query) {
+    if (!medicalData || medicalData.length === 0) return [];
+    
+    const searchTerm = query.toLowerCase().trim();
+    const searchWords = searchTerm.split(/\s+/);
+    
+    return medicalData.filter(item => {
+        const searchableText = `${item.code} ${item.name} ${item.description}`.toLowerCase();
+        return searchWords.every(word => searchableText.includes(word));
+    }).sort((a, b) => {
+        // Prioritize exact code matches
+        const aCodeMatch = a.code.toLowerCase() === searchTerm;
+        const bCodeMatch = b.code.toLowerCase() === searchTerm;
+        if (aCodeMatch && !bCodeMatch) return -1;
+        if (!aCodeMatch && bCodeMatch) return 1;
+        
+        // Then by name match
+        const aNameMatch = a.name.toLowerCase().includes(searchTerm);
+        const bNameMatch = b.name.toLowerCase().includes(searchTerm);
+        if (aNameMatch && !bNameMatch) return -1;
+        if (!aNameMatch && bNameMatch) return 1;
+        
+        return 0;
+    });
 }

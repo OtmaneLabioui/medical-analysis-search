@@ -96,6 +96,48 @@
     <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Medical Assistant</span>
+            </div>
+            <button id="closeChatBtn" class="close-chat-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="chat-messages">
+            <div class="bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>👋 Bonjour! Je suis votre assistant médical.</p>
+                    <p>Posez-moi des questions sur les analyses médicales:</p>
+                    <ul>
+                        <li>"Quel est le prix de NFS?"</li>
+                        <li>"Combien coûte la glycémie?"</li>
+                        <li>"Rechercher cholestérol"</li>
+                        <li>"Prix TSH"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Tapez votre question..." />
+            <button id="sendChatBtn" class="send-chat-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button id="chatbotToggle" class="chatbot-toggle">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">1</span>
+    </button>
+
     <!-- Load medical database first -->
     <script src="medical-data.js"></script>
     <script src="script.js"></script>
