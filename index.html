@@ -2,144 +2,151 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#2196F3">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Medical Analysis">
-    <title>Recherche d'Analyses Médicales | Base de Données Professionnelle</title>
-    <meta name="description" content="Recherchez parmi 412 analyses médicales au Maroc avec descriptions détaillées, prix et secteurs de laboratoire.">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0e6b56">
+    <meta name="description" content="Prix d'analyses médicales au Maroc. Glycémie, NFS, TSH, grossesse, ECBU. Confirmez le tarif dans votre ville. Le montant FAR est réservé aux laboratoires conventionnés.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Prix des analyses médicales au Maroc">
+    <meta property="og:description" content="Glycémie 30 DH, NFS 110 DH, TSH 200 DH. À confirmer au laboratoire de votre ville.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_MA">
+    <meta property="og:locale:alternate" content="ar_MA">
+    <title>Tarifs des analyses médicales au Maroc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,650&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-section">
-                <i class="fas fa-hospital-alt logo-icon"></i>
-                <div class="logo-text">
-                    <h1>MedAnalysis</h1>
-                    <span>Professional Healthcare Database</span>
-                </div>
-            </div>
-            <div class="header-stats" id="headerStats">
-                <div class="stat-item">
-                    <i class="fas fa-database"></i>
-                    <span id="totalAnalyses">Loading...</span>
-                </div>
+    <a class="skip" href="#recherche" data-i18n="skip">Aller à la recherche</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="#recherche">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>
+                    <span class="brand-name" data-i18n="brand">Tarifs Labo</span>
+                    <span class="brand-sub" data-i18n="brandSub">Catalogue du 13 décembre 2025</span>
+                </span>
+            </a>
+            <div class="header-actions">
+                <p class="header-count"><span id="catalogCount">—</span> <span data-i18n="exams">examens</span></p>
+                <button type="button" class="lang-toggle" id="langToggle" lang="ar">Arabe</button>
+                <button type="button" class="order-toggle" id="orderToggle" aria-expanded="false" aria-controls="orderSheet">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7V3z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15 3v5h5M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    <span data-i18n="order">Ordonnance</span>
+                    <span class="count-badge" id="orderCount" hidden>0</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Search Section -->
-        <section class="search-section">
-            <div class="search-header">
-                <h2><i class="fas fa-search"></i> Search Medical Analysis</h2>
-                <p>Find medical tests and their current prices instantly</p>
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow" data-i18n="eyebrow">Avant d'aller au laboratoire</p>
+                <h1 data-i18n="title">Le prix de l'analyse, tout de suite.</h1>
+                <p class="lede" data-i18n="lede">Tapez le nom sur l'ordonnance, ou un mot simple : sucre, thyroïde, cholestérol. Le prix s'affiche tout de suite.</p>
             </div>
-            
-            <div class="search-container">
-                <div class="search-box">
-                    <div class="search-input-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" placeholder="Enter analysis name (e.g., Blood Test, MRI, X-Ray...)" autocomplete="off">
-                        <button id="clearBtn" class="clear-btn" title="Clear search">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <button id="searchBtn" class="search-btn">
-                        <i class="fas fa-search"></i>
-                        Search
+
+            <form class="search-form" id="searchForm" role="search">
+                <label class="sr-only" for="searchInput" data-i18n="searchLabel">Rechercher une analyse</label>
+                <div class="search-bar" id="recherche">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16.5L20 20.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    <input id="searchInput" type="search" dir="auto" placeholder="Glycémie, TSH, NFS, fer, ECBU…" autocomplete="off" enterkeyhint="search">
+                    <button type="button" class="clear-search" id="clearSearch" hidden aria-label="Effacer la recherche">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                     </button>
                 </div>
-                
-                <!-- Live Suggestions -->
-                <div id="suggestions" class="suggestions-dropdown"></div>
-            </div>
+                <div id="suggestions" class="suggestions" role="listbox" hidden></div>
+            </form>
+
+            <div class="chips" id="quickChips" aria-label="Recherches fréquentes"></div>
         </section>
 
-        <!-- Results Section -->
-        <section class="results-section">
-            <div id="results" class="results-container"></div>
+        <section class="guide">
+            <details>
+                <summary data-i18n="farTitle">Le tarif FAR, c'est pour qui ?</summary>
+                <p class="guide-text" data-i18n="farText">Le prix en grand est celui à retenir. Le montant FAR est une information en plus : il concerne seulement les laboratoires conventionnés par les Forces Armées Royales. Si votre laboratoire ne l'est pas, ignorez-le.</p>
+            </details>
         </section>
 
-        <!-- All Data Section -->
-        <section class="data-section">
-            <div class="section-header">
-                <h3><i class="fas fa-list-ul"></i> Complete Database</h3>
-                <div class="action-buttons">
-                    <button id="showAllBtn" class="btn-secondary">
-                        <i class="fas fa-eye"></i>
-                        View All
-                    </button>
-                </div>
+        <section class="reach" id="maroc">
+            <h2><span class="only-fr">Pour les Marocains, dans leur ville</span><span class="only-ar" lang="ar">للمغاربة، فمدينتهم</span></h2>
+            <p class="only-fr">Le grand prix vient de ce catalogue du 13 décembre 2025. Il n'est pas un tarif unique pour tout le pays : confirmez-le au laboratoire, à Casablanca, Rabat, Salé, Tanger, Tétouan, Fès, Meknès, Marrakech, Agadir, Oujda, Nador, Kénitra, El Jadida, Béni Mellal, Laâyoune ou Dakhla.</p>
+            <p class="only-ar" lang="ar" dir="rtl">الثمن الكبير من هاد الكتالوج. ماشي ثمن واحد للمغرب كامل: أكّدو فالمختبر، فالدار البيضاء، الرباط، سلا، طنجة، تطوان، فاس، مكناس، مراكش، أكادير، وجدة، الناظور، القنيطرة، الجديدة، بني ملال، العيون ولا الداخلة.</p>
+            <div class="cities" id="cities" aria-label="Votre ville"></div>
+            <p class="city-line" id="cityLine" hidden></p>
+            <h2><span class="only-fr">Prix souvent partagés</span><span class="only-ar" lang="ar">أثمنة كيتشاركات بزاف</span></h2>
+            <ul class="crawl-list">
+                <li><a href="prix/glycemie.html"><span class="only-fr">Glycémie à jeun</span><span class="only-ar" lang="ar">السكر</span> <strong>30,00 DH</strong></a></li>
+                <li><a href="prix/nfs.html"><span class="only-fr">NFS</span><span class="only-ar" lang="ar">تعداد الدم</span> <strong>110,00 DH</strong></a></li>
+                <li><a href="prix/tsh.html"><span class="only-fr">TSH</span><span class="only-ar" lang="ar">الغدة</span> <strong>200,00 DH</strong></a></li>
+                <li><a href="prix/cholesterol.html"><span class="only-fr">Cholestérol</span><span class="only-ar" lang="ar">الكوليستيرول</span> <strong>30,00 DH</strong></a></li>
+                <li><a href="prix/ferritine.html"><span class="only-fr">Ferritine</span><span class="only-ar" lang="ar">الحديد</span> <strong>250,00 DH</strong></a></li>
+                <li><a href="prix/ecbu.html"><span class="only-fr">ECBU</span><span class="only-ar" lang="ar">البول</span> <strong>150,00 DH</strong></a></li>
+                <li><a href="prix/grossesse.html"><span class="only-fr">Grossesse</span><span class="only-ar" lang="ar">الحمل</span></a></li>
+                <li><a href="prix/creatinine.html"><span class="only-fr">Créatinine</span><span class="only-ar" lang="ar">الكلى</span> <strong>30,00 DH</strong></a></li>
+                <li><a href="prix/bilan-lipidique.html"><span class="only-fr">Bilan lipidique</span><span class="only-ar" lang="ar">حصيلة الدهون</span> <strong>190,00 DH</strong></a></li>
+                <li><a href="prix/bilan-thyroide.html"><span class="only-fr">Bilan thyroïdien</span><span class="only-ar" lang="ar">حصيلة الغدة</span> <strong>400,00 DH</strong></a></li>
+                <li><a href="prix/bilan-hepatique.html"><span class="only-fr">Bilan hépatique</span><span class="only-ar" lang="ar">الكبدة</span> <strong>340,00 DH</strong></a></li>
+                <li><a href="prix/hepatite-b.html"><span class="only-fr">Hépatite B</span><span class="only-ar" lang="ar">التهاب الكبد ب</span> <strong>120,00 DH</strong></a></li>
+            </ul>
+        </section>
+
+        <section class="workspace">
+            <div class="toolbar" id="toolbar">
+                <label class="field">
+                    <span data-i18n="specialty">Spécialité</span>
+                    <select id="sectorFilter">
+                        <option value="" data-i18n="allSectors">Tous les secteurs</option>
+                    </select>
+                </label>
+                <label class="check">
+                    <input type="checkbox" id="hnFilter">
+                    <span data-i18n="hnFilter">Hors liste officielle</span>
+                </label>
+                <label class="check">
+                    <input type="checkbox" id="panelFilter">
+                    <span data-i18n="panelFilter">Bilans seulement</span>
+                </label>
+                <p class="result-count" id="resultCount" aria-live="polite"></p>
             </div>
-            <div id="allData" class="data-grid"></div>
+
+            <div id="home"></div>
+            <div id="results" class="results"></div>
         </section>
     </main>
 
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-content">
-            <div class="loader">
-                <div class="loader-inner"></div>
-            </div>
-            <h3>Loading Medical Database</h3>
-            <p>Please wait while we prepare your data...</p>
-        </div>
-    </div>
+    <footer class="site-footer">
+        <p data-i18n="footerPrices">Prix du fichier catalogue du 13 décembre 2025. Confirmez-les au laboratoire avant de payer. Le tarif FAR ne s'applique qu'aux laboratoires conventionnés par les Forces Armées Royales.</p>
+        <p data-i18n="footerDisclaimer">Ce site informe sur des tarifs. Il ne lit pas un résultat et ne remplace pas un médecin ni un biologiste.</p>
+    </footer>
 
-    <!-- Toast Notifications -->
-    <div id="toastContainer" class="toast-container"></div>
+    <div class="overlay" id="overlay" hidden></div>
 
-    <!-- Chatbot -->
-    <div id="chatbot" class="chatbot">
-        <div class="chatbot-header">
-            <div class="chatbot-title">
-                <i class="fas fa-robot"></i>
-                <span>Medical Assistant</span>
+    <aside class="sheet" id="orderSheet" role="dialog" aria-modal="true" aria-labelledby="orderTitle" hidden>
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <header class="sheet-header">
+            <div>
+                <h2 id="orderTitle" data-i18n="orderTitle">Votre ordonnance</h2>
+                <p data-i18n="orderHint">Cochez les examens de votre ordonnance pour voir le total.</p>
             </div>
-            <button id="closeChatBtn" class="close-chat-btn">
-                <i class="fas fa-times"></i>
+            <button type="button" class="icon-btn" id="closeOrder" aria-label="Fermer l'ordonnance">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             </button>
-        </div>
-        <div id="chatMessages" class="chat-messages">
-            <div class="bot-message">
-                <div class="message-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="message-content">
-                    <p>👋 Bonjour! Je suis votre assistant médical.</p>
-                    <p>Posez-moi des questions sur les analyses médicales:</p>
-                    <ul>
-                        <li>"Quel est le prix de NFS?"</li>
-                        <li>"Combien coûte la glycémie?"</li>
-                        <li>"Rechercher cholestérol"</li>
-                        <li>"Prix TSH"</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-container">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Tapez votre question..." />
-            <button id="sendChatBtn" class="send-chat-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
+        </header>
+        <div class="sheet-body" id="orderList"></div>
+        <footer class="sheet-footer" id="orderFooter"></footer>
+    </aside>
 
-    <!-- Chatbot Toggle Button -->
-    <button id="chatbotToggle" class="chatbot-toggle">
-        <i class="fas fa-comments"></i>
-        <span class="chat-badge">1</span>
-    </button>
+    <dialog id="detailDialog">
+        <div class="dialog-inner" id="detailBody"></div>
+    </dialog>
 
-    <!-- Load medical database first -->
-    <script src="medical-data.js"></script>
-    <script src="script.js"></script>
+    <div class="toast" id="toast" role="status" hidden></div>
+
+    <script src="medical-data.js?v=2"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>
