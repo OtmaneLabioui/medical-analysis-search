@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prix des analyses les plus demandées au Maroc</title>
+    <meta name="description" content="Glycémie, NFS, TSH, cholestérol, ECBU, grossesse. Prix du catalogue à confirmer dans votre ville.">
+    <link rel="stylesheet" href="../style.css?v=2">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span><span class="brand-name">Tarifs Labo</span><span class="brand-sub">Catalogue du 13 décembre 2025</span></span></a>
+                    <a class="lang-toggle" href="?lang=ar" lang="ar">Arabe</a>
+        </div>
+    </header>
+    <main class="price-page">
+        <h1>Les prix que les Marocains cherchent</h1>
+        <p class="only-ar" lang="ar" dir="rtl">الأثمنة اللي كيتقلب عليها المغاربة. أكّدوها فالمختبر ديال مدينتكم.</p>
+        <ul class="crawl-list">
+            <li><a href="glycemie.html"><span class="only-fr">Glycémie à jeun</span><span class="only-ar" lang="ar" dir="rtl">السكر فالدم</span><strong>30,00 DH</strong></a></li>
+            <li><a href="nfs.html"><span class="only-fr">NFS, numération formule sanguine</span><span class="only-ar" lang="ar" dir="rtl">تعداد الدم</span><strong>110,00 DH</strong></a></li>
+            <li><a href="tsh.html"><span class="only-fr">TSH ultrasensible</span><span class="only-ar" lang="ar" dir="rtl">الغدة</span><strong>200,00 DH</strong></a></li>
+            <li><a href="cholesterol.html"><span class="only-fr">Cholestérol</span><span class="only-ar" lang="ar" dir="rtl">الكوليستيرول</span><strong>30,00 DH</strong></a></li>
+            <li><a href="ferritine.html"><span class="only-fr">Ferritine</span><span class="only-ar" lang="ar" dir="rtl">مخزون الحديد</span><strong>250,00 DH</strong></a></li>
+            <li><a href="fer.html"><span class="only-fr">Fer sérique</span><span class="only-ar" lang="ar" dir="rtl">الحديد فالدم</span><strong>60,00 DH</strong></a></li>
+            <li><a href="ecbu.html"><span class="only-fr">ECBU</span><span class="only-ar" lang="ar" dir="rtl">تحليل البول</span><strong>150,00 DH</strong></a></li>
+            <li><a href="creatinine.html"><span class="only-fr">Créatinine</span><span class="only-ar" lang="ar" dir="rtl">الكلى</span><strong>30,00 DH</strong></a></li>
+            <li><a href="uree.html"><span class="only-fr">Urée</span><span class="only-ar" lang="ar" dir="rtl">اليوريا</span><strong>30,00 DH</strong></a></li>
+            <li><a href="asat.html"><span class="only-fr">ASAT, transaminase</span><span class="only-ar" lang="ar" dir="rtl">أنزيم الكبدة</span><strong>100,00 DH</strong></a></li>
+            <li><a href="ft4.html"><span class="only-fr">FT4, thyroxine libre</span><span class="only-ar" lang="ar" dir="rtl">هرمون الغدة</span><strong>200,00 DH</strong></a></li>
+            <li><a href="hepatite-b.html"><span class="only-fr">Hépatite B, antigène HBs</span><span class="only-ar" lang="ar" dir="rtl">التهاب الكبد ب</span><strong>120,00 DH</strong></a></li>
+            <li><a href="bilan-lipidique.html"><span class="only-fr">Bilan lipidique</span><span class="only-ar" lang="ar" dir="rtl">حصيلة الدهون</span><strong>190,00 DH</strong></a></li>
+            <li><a href="bilan-thyroide.html"><span class="only-fr">Bilan thyroïdien</span><span class="only-ar" lang="ar" dir="rtl">حصيلة الغدة</span><strong>400,00 DH</strong></a></li>
+            <li><a href="bilan-hepatique.html"><span class="only-fr">Bilan hépatique</span><span class="only-ar" lang="ar" dir="rtl">حصيلة الكبدة</span><strong>340,00 DH</strong></a></li>
+            <li><a href="hemostase.html"><span class="only-fr">Bilan d&#39;hémostase</span><span class="only-ar" lang="ar" dir="rtl">تخثر الدم</span><strong>120,00 DH</strong></a></li>
+            <li><a href="grossesse.html"><span class="only-fr">Grossesse</span><span class="only-ar" lang="ar" dir="rtl">الحمل</span></a></li>
+        </ul>
+        <p><a class="primary-btn" href="../index.html">Tout le catalogue, 429 examens</a></p>
+    </main>
+
+    <script>
+        (function () {
+            var ar = new URLSearchParams(location.search).get("lang") === "ar";
+            document.documentElement.lang = ar ? "ar" : "fr";
+            document.documentElement.dir = ar ? "rtl" : "ltr";
+            if (ar) {
+                document.querySelectorAll("a[href]").forEach(function (link) {
+                    if (link.classList.contains("lang-toggle")) return;
+                    var href = link.getAttribute("href") || "";
+                    if (!href || href.indexOf("http") === 0 || href.indexOf("lang=") !== -1 || href.indexOf(".html") === -1) return;
+                    link.setAttribute("href", href + (href.indexOf("?") === -1 ? "?" : "&") + "lang=ar");
+                });
+            }
+            var toggle = document.querySelector(".lang-toggle");
+            if (!toggle) return;
+            var url = new URL(location.href);
+            if (ar) {
+                url.searchParams.delete("lang");
+                toggle.textContent = "Français";
+                toggle.setAttribute("lang", "fr");
+            } else {
+                url.searchParams.set("lang", "ar");
+                toggle.textContent = "Arabe";
+                toggle.setAttribute("lang", "ar");
+            }
+            toggle.setAttribute("href", url.pathname + url.search);
+        })();
+    </script>
+</body>
+</html>

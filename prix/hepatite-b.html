@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0e6b56">
+    <title>Prix Hépatite B, antigène HBs au Maroc : 120,00 DH</title>
+    <meta name="description" content="Hépatite B, antigène HBs : 120,00 DH dans ce catalogue du 13 décembre 2025. FAR 13,00 DH seulement si le laboratoire est conventionné. À confirmer dans votre ville.">
+    <meta property="og:title" content="Prix Hépatite B, antigène HBs au Maroc : 120,00 DH">
+    <meta property="og:description" content="Hépatite B, antigène HBs : 120,00 DH dans ce catalogue du 13 décembre 2025. FAR 13,00 DH seulement si le laboratoire est conventionné. À confirmer dans votre ville.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_MA">
+    <meta property="og:locale:alternate" content="ar_MA">
+    <link rel="stylesheet" href="../style.css?v=2">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="../index.html">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>
+                    <span class="brand-name">Tarifs Labo</span>
+                    <span class="brand-sub">Catalogue du 13 décembre 2025</span>
+                </span>
+            </a>
+            <a class="lang-toggle" href="?lang=ar">Arabe</a>
+        </div>
+    </header>
+    <main class="price-page">
+        <p class="eyebrow">Prix d'une analyse au Maroc</p>
+        <h1>Hépatite B, antigène HBs</h1>
+        <p class="lede only-ar" lang="ar" dir="rtl">التهاب الكبد ب</p>
+        <p class="only-fr">Dépistage d&#39;une hépatite B.</p>
+        <p class="only-ar" lang="ar" dir="rtl">كشف التهاب الكبد ب.</p>
+        <p class="price-main"><span class="amount">120,00 DH</span></p>
+        <p class="far-note"><span class="only-fr">Laboratoire conventionné FAR : <strong>13,00 DH</strong></span> <span class="only-ar" lang="ar" dir="rtl">مختبر متعاقد مع FAR : 13,00 درهم</span></p>
+        <p class="note"><span class="only-fr">Le jeûne n&#39;est pas nécessaire. </span><span class="only-ar" lang="ar" dir="rtl">ما خصكش تكون صايم.</span></p>
+        <p class="only-fr">Ce montant vient du catalogue, pas d'une grille unique pour tout le Maroc. Confirmez-le au laboratoire à Casablanca, Rabat, Salé, Tanger, Tétouan, Fès, Marrakech, Agadir, Oujda, Nador, Laâyoune, Dakhla.</p>
+        <p class="only-ar" lang="ar" dir="rtl">هاد الثمن من الكتالوج، ماشي ثمن رسمي لكل المغرب. أكّدو فالمختبر فـ الدار البيضاء، الرباط، سلا، طنجة، تطوان، فاس، مراكش، أكادير، وجدة، الناظور، العيون، الداخلة.</p>
+        <div class="sheet-actions">
+            <a class="primary-btn" href="../index.html?c=AGHBS">Ouvrir dans le catalogue</a>
+            <a class="wa-btn" id="wa" href="https://wa.me/?text=H%C3%A9patite%20B%2C%20antig%C3%A8ne%20HBs%20%E2%80%94%20120%2C00%20DH">WhatsApp</a>
+            <a class="ghost-btn" href="./">Autres prix</a>
+        </div>
+    </main>
+    <script>
+        document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent("Hépatite B, antigène HBs — 120,00 DH\n" + location.href);
+    </script>
+
+    <script>
+        (function () {
+            var ar = new URLSearchParams(location.search).get("lang") === "ar";
+            document.documentElement.lang = ar ? "ar" : "fr";
+            document.documentElement.dir = ar ? "rtl" : "ltr";
+            if (ar) {
+                document.querySelectorAll("a[href]").forEach(function (link) {
+                    if (link.classList.contains("lang-toggle")) return;
+                    var href = link.getAttribute("href") || "";
+                    if (!href || href.indexOf("http") === 0 || href.indexOf("lang=") !== -1 || href.indexOf(".html") === -1) return;
+                    link.setAttribute("href", href + (href.indexOf("?") === -1 ? "?" : "&") + "lang=ar");
+                });
+            }
+            var toggle = document.querySelector(".lang-toggle");
+            if (!toggle) return;
+            var url = new URL(location.href);
+            if (ar) {
+                url.searchParams.delete("lang");
+                toggle.textContent = "Français";
+                toggle.setAttribute("lang", "fr");
+            } else {
+                url.searchParams.set("lang", "ar");
+                toggle.textContent = "Arabe";
+                toggle.setAttribute("lang", "ar");
+            }
+            toggle.setAttribute("href", url.pathname + url.search);
+        })();
+    </script>
+</body>
+</html>
