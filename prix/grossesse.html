@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prix des analyses de grossesse au Maroc</title>
+    <meta name="description" content="Beta-HCG 250 DH, groupe sanguin 160 DH, toxoplasmose et rubéole. Prix du catalogue du 13 décembre 2025, à confirmer au laboratoire.">
+    <meta property="og:title" content="Analyses de grossesse au Maroc">
+    <meta property="og:description" content="Beta-HCG 250 DH, groupage 160 DH, toxoplasmose et rubéole.">
+    <link rel="stylesheet" href="../style.css?v=2">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span><span class="brand-name">Tarifs Labo</span><span class="brand-sub">Catalogue du 13 décembre 2025</span></span></a>
+                    <a class="lang-toggle" href="?lang=ar" lang="ar">Arabe</a>
+        </div>
+    </header>
+    <main class="price-page">
+        <p class="eyebrow"><span class="only-fr">Grossesse</span><span class="only-ar" lang="ar" dir="rtl">الحمل</span></p>
+        <h1>Analyses souvent demandées pendant la grossesse</h1>
+        <p class="only-ar" lang="ar" dir="rtl">تحاليل كيتطلبو بزاف فالحمل. الثمن من الكتالوج، وأكّدو فالمختبر ديالكم.</p>
+        <ul class="crawl-list">
+            <li><a href="../index.html?c=BHCG%201"><span class="only-fr">Beta-HCG</span><span class="only-ar" lang="ar" dir="rtl">هرمون الحمل</span><strong>250,00 DH</strong></a></li>
+            <li><a href="../index.html?c=GR"><span class="only-fr">Groupe sanguin ABO</span><span class="only-ar" lang="ar" dir="rtl">فصيلة الدم</span><strong>160,00 DH</strong></a></li>
+            <li><a href="../index.html?c=TOXOG">Toxoplasmose IgG <strong>100,00 DH</strong></a></li>
+            <li><a href="../index.html?c=TOXOM">Toxoplasmose IgM <strong>150,00 DH</strong></a></li>
+            <li><a href="../index.html?c=RUBG"><span class="only-fr">Rubéole IgG</span><span class="only-ar" lang="ar" dir="rtl">الحصبة الألمانية</span><strong>150,00 DH</strong></a></li>
+            <li><a href="../index.html?c=RUBM">Rubéole IgM <strong>400,00 DH</strong></a></li>
+            <li><a href="glycemie.html"><span class="only-fr">Glycémie à jeun</span><span class="only-ar" lang="ar" dir="rtl">السكر</span><strong>30,00 DH</strong></a></li>
+        </ul>
+        <p class="note"><span class="only-fr">Le jeûne n'est pas demandé pour ces sérologies.</span> <span class="only-ar" lang="ar" dir="rtl">ما خصكش تكون صايم فهاد التحاليل.</span></p>
+        <p><a class="primary-btn" href="../index.html?q=grossesse">Chercher dans le catalogue</a></p>
+    </main>
+
+    <script>
+        (function () {
+            var ar = new URLSearchParams(location.search).get("lang") === "ar";
+            document.documentElement.lang = ar ? "ar" : "fr";
+            document.documentElement.dir = ar ? "rtl" : "ltr";
+            if (ar) {
+                document.querySelectorAll("a[href]").forEach(function (link) {
+                    if (link.classList.contains("lang-toggle")) return;
+                    var href = link.getAttribute("href") || "";
+                    if (!href || href.indexOf("http") === 0 || href.indexOf("lang=") !== -1 || href.indexOf(".html") === -1) return;
+                    link.setAttribute("href", href + (href.indexOf("?") === -1 ? "?" : "&") + "lang=ar");
+                });
+            }
+            var toggle = document.querySelector(".lang-toggle");
+            if (!toggle) return;
+            var url = new URL(location.href);
+            if (ar) {
+                url.searchParams.delete("lang");
+                toggle.textContent = "Français";
+                toggle.setAttribute("lang", "fr");
+            } else {
+                url.searchParams.set("lang", "ar");
+                toggle.textContent = "Arabe";
+                toggle.setAttribute("lang", "ar");
+            }
+            toggle.setAttribute("href", url.pathname + url.search);
+        })();
+    </script>
+</body>
+</html>
